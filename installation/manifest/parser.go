@@ -39,6 +39,7 @@ type installation struct {
 	Properties map[interface{}]interface{}
 	SSHTunnel  SSHTunnel `yaml:"ssh_tunnel"`
 	Mbus       string
+	OldMbus    string
 	Cert       Certificate
 }
 
@@ -115,8 +116,9 @@ func (p *parser) Parse(path string, vars boshtpl.Variables, op patch.Op, release
 			Name:    comboManifest.CloudProvider.Template.Name,
 			Release: comboManifest.CloudProvider.Template.Release,
 		},
-		Mbus: comboManifest.CloudProvider.Mbus,
-		Cert: comboManifest.CloudProvider.Cert,
+		Mbus:    comboManifest.CloudProvider.Mbus,
+		OldMbus: comboManifest.CloudProvider.OldMbus,
+		Cert:    comboManifest.CloudProvider.Cert,
 	}
 
 	properties, err := biproperty.BuildMap(comboManifest.CloudProvider.Properties)

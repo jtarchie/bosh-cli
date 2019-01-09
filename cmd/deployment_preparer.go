@@ -248,10 +248,12 @@ func (c *DeploymentPreparer) deploy(
 	}
 
 	agentClient, err := c.agentClientFactory.NewAgentClient(deploymentState.DirectorID, installationManifest.Mbus, installationManifest.Cert.CA)
+	oldAgentClient, err := c.agentClientFactory.NewAgentClient(deploymentState.DirectorID, installationManifest.OldMbus, installationManifest.Cert.CA)
 	if err != nil {
 		return err
 	}
 	vmManager := c.vmManagerFactory.NewManager(cloud, agentClient)
+	OldVmManager := c.vmManagerFactory.NewManager(cloud, oldAgentClient)
 
 	blobstore, err := c.blobstoreFactory.Create(installationManifest.Mbus, bihttpclient.CreateDefaultClientInsecureSkipVerify())
 	if err != nil {
@@ -275,6 +277,7 @@ func (c *DeploymentPreparer) deploy(
 			cloudStemcell,
 			registrySettings,
 			vmManager,
+			OldVmManager,
 			blobstore,
 			skipDrain,
 			deployStage,

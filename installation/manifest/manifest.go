@@ -9,6 +9,7 @@ type Manifest struct {
 	Template   ReleaseJobRef
 	Properties biproperty.Map
 	Mbus       string
+	OldMbus    string
 	Cert       Certificate
 	Registry   Registry
 }
